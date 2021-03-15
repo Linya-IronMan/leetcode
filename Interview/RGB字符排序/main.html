@@ -1,0 +1,42 @@
+<script>
+
+let str = 'RBBGGBRRBGRBGBRBGBRGBBGR'
+let strTest = 'RBBGGBRR'
+
+function sort(str) {
+    str = str.split('')
+    let count = str.length;
+
+    for (let i=0; i < str.length; i++) {
+        if (count >=0 ) {
+            switch(str[i]) {
+                case 'R':
+                    str.splice(i, 1)
+                    str.unshift('R')
+                    break;
+                case 'G':
+                    break;
+                case 'B':
+                    str.splice(i, 1)
+                    str.push('B')
+                    i--
+                    break;
+                default:
+                    console.log('Error:' + str[i])
+                    break
+            }
+            count--
+        } else {
+            break;
+        }
+       
+        // console.log(str[i], str)
+    }
+
+    return str.join('')
+}
+
+const result = sort(str);
+console.log(result, '============')
+
+</script>

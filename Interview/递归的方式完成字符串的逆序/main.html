@@ -1,0 +1,29 @@
+
+<script>
+
+// 将最后一位和第一位进行交换
+    function reverse(str) {
+        str = str.split('')
+
+        function inReverse(start, end) {
+            if (start >= end ) {
+                return str;
+            } else {
+                // exchange
+                let cache = str[start];
+                str[start] = str[end];
+                str[end] = cache;
+                inReverse(++start, --end)
+            }
+        }
+
+        inReverse(0, str.length - 1);
+        return str.join('')
+
+    }
+
+    console.log(1234156)
+    const result = reverse('abcdefghijklmn')
+    console.log(result, '=======');
+
+</script>

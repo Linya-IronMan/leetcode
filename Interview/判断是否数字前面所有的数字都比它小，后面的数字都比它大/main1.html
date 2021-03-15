@@ -1,0 +1,56 @@
+<script>
+
+/* 
+* 9,7,8,11,5,6,66,45,110,120,111
+* 
+ */
+ /* int a={9,7,8,11,5,6,66,45,110,120,111}(具体数据忘记了)，
+ 判断是否数字前面所有的数字都比它小，后面的数字都比它大，
+ 若有，则输出，
+ 若没有输出-1，时间复杂度和空间均为O(n) */
+
+//  双指针
+
+function getNum(arr) {
+    
+    let left= 0, right = arr.length - 1;
+    let curMax = arr[left], curMin = arr[right];
+
+    for(left, right; left < right; ) {
+        debugger
+        [curMax, curMin] = getNextMaxMin(left, right);
+    }
+
+    function getNextMaxMin(leftIndex, rightIndex) {
+        let hasNewMax = false, hasNewMin = false;
+        leftIndex += 1, rightIndex -= 1;
+        while(left < right) {
+            if ( arr[leftIndex] > curMax) {
+                left = leftIndex;
+                hasNewMax = true;
+            }
+            leftIndex++
+        }
+
+        while(left < right) {
+            if ( arr[leftIndex] < curMin) {
+                right = rightIndex
+                hasNewMax = true;
+            }
+            leftIndex++
+        }
+
+        return [
+            arr[left],
+            arr[right]
+        ]
+    }
+
+    return arr[left]
+}
+
+const testArr = [9,7,8,11,5,6,66,45,110,120,111];
+const testArr1 = [1, 2, 3]
+const result = getNum([3,2,1])
+console.log(result)
+</script>

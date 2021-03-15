@@ -1,0 +1,30 @@
+<script>
+
+    function sumBigNum(num1, num2) {
+        let cache = []
+        let num1Reverse = String(num1).split('').reverse(), num1Len = num1Reverse.length;
+        let num2Reverse = String(num2).split('').reverse(), num2Len = num2Reverse.length;
+        console.log(num1Reverse, num2Reverse)
+            const maxLen = Math.max(num1Len, num2Len)
+            let jinwei = 0
+            for (let i = 0; i < maxLen; i++) {
+
+                if (!num1Reverse[i]) num1Reverse[i] = 0
+                if (!num2Reverse[i]) num2Reverse[i] = 0
+
+                let curIndexSum = Number(num1Reverse[i]) + Number(num2Reverse[i]) + Number(jinwei);
+                jinwei = Math.floor(curIndexSum/10);
+                let curNum = curIndexSum % 10
+                // debugger
+                cache.push(curNum)
+            }
+
+
+
+        return cache.reverse().join('');
+    }
+
+    const result = sumBigNum('100000000000002222', '111111');  // 100000000000113333
+    console.log(result, '=====');
+
+</script>
