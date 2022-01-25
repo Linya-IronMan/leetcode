@@ -140,16 +140,105 @@ ROOT((ROOT))
 ROOTL((ROOTL))
 ROOTR((ROOTR))
 
-ROOT--你好-->ROOTL
+ROOT-->ROOTL
 ROOT-->ROOTR
 
 ```
 
 
+# 最优子结构
+
+- 这并不是动态规划问题专有的问题。很多问题其实都具有最优子结构，只是大部分不具有重叠子问题，所以我们不把他们归为动态规划系列问题。
+
+最优子结构：可以从子问题的最优结果推出更大规模问题的最优结果。
+
+最优子结构性质作为动态规划问题的必要条件，一定是要求最值的。
+
+动态规划就是从最简单的 base case 向后推到，可以想象成一个链式反应，以小搏大。但只有最符合最优子结构的问题，才有发生这种链式反应的性质。
+
+寻找最优子结构的过程，其实就是证明状态转移方程正确性的过程，方程符合最优子结构就可以写暴力解了。
+写出暴力解之后通过用于分析的二叉树就可以知道有无重叠子问题，有则优化（备忘录和状态压缩）。
 
 
+# 动态规划设计：最长递增子序列
+
+[https://leetcode-cn.com/problems/longest-increasing-subsequence/](https://leetcode-cn.com/problems/longest-increasing-subsequence/)
+
+![](images/2022-01-25-00-01-23.png)
+
+![](images/2022-01-25-00-01-47.png)
+
+## 自行分析
+---
+
+**套路分析**
+
+1. 确定 `base case` 。 nums === [] 的时候 返回 0
+2. 确定状态：nums
+   1. 状态就是问题中会发生变化的变量
+   2. 状态需要不断接近 base case
+3. 确定选择
+   1. 如何让状态不断接近 base case
+4. 明确 db 函数/数组的约定
+   1. 获取 nums 最长递增数组
+
+---
+
+尝试书写伪代码
+
+```javascript
+function getResult(arr) {
+
+    function dp(nums) {
+        if (nums.length === 0) return [];
+        const cache = dp(arr.slice(0, -1));
+        const lastNum = arr.pop();
+        if (cache[cache.length - 1] < lastNum) {
+            cache.push(lastNum);
+        }
+        return cache;
+    }
+
+    return dp(nums).length
+
+}
+
+```
+
+尝试在 leetcode 中进行提交。
+
+---
+
+leetcode 中提交的代码报错了，并且发现自己的状态转移方程其实并没有写好，base case 也有缺漏
+
+1. base case ：
+   - nums.length === 0 时， return nums
+   - nums.length === 1 时，return nums
 
 
+```javascript
+var lengthOfLIS = function(nums) {
+    function dp(arr) {
+        if (arr.length === 0) return [];
+        else if (arr.length === 1) return arr;
+        const cache = dp(arr.slice(0, -1));
+        const lastNum = arr.pop();
+        if (cache[cache.length - 1] < lastNum) {
+            cache.push(lastNum);
+        }
+        return cache.length;
+    }
+
+    return dp(nums)
+};
+
+```
+
+**逻辑错误：** 不能使用数组最后一项来判断 下一项是否能够直接添加到 d(n-1) 后面
+
+这个错误应当属于 “状态转移方程” 错误。
+
+---
 
 
 
