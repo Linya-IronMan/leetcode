@@ -236,10 +236,45 @@ var lengthOfLIS = function(nums) {
 
 **逻辑错误：** 不能使用数组最后一项来判断 下一项是否能够直接添加到 d(n-1) 后面
 
-这个错误应当属于 “状态转移方程” 错误。
+这个错误应当是在 “状态转移方程” 这一步错误。
 
 ---
 
+## labuladong
 
 
+# 动态规划例题：零钱兑换 322
 
+> 给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
+计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回 -1 。
+你可以认为每种硬币的数量是无限的。
+
+> `var coinChange = function(coins, amount) {}`
+
+ 
+1. 确定 `base case` 。 amount = 0， return 0
+2. 确定状态：amount
+   1. 状态就是问题中会发生变化的变量
+   2. 状态需要不断接近 base case
+3. 确定选择 amount --
+   1. 如何让状态不断接近 base case
+4. 明确 db 函数/数组的约定: 指定 amount 获取凑出金额为 M(n) 的最少硬币数量
+5. 状态转移方程
+    Fib(n) = Min(Fib(n - coin(0)), Fib(n - coin(1))...) + 1
+
+```javascript
+    fib(amount) {
+        if (amount == 0) return 0;
+        let minCoinNum;
+        for (let i = 0; i < coins.length; i++) {
+            // 剩下的 要凑的数量
+            const lastAmount = amount - coins[i];
+            if (i === 0) minCoinNum = fib(lastAmount);
+            else {
+                minCounNum = Math.min(minCoinNum, fib(lastAmount));
+            }
+        }
+        return minCoinNum + 1;
+    }
+
+```
