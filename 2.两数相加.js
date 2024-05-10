@@ -28,7 +28,7 @@ var addTwoNumbers = function (l1, l2) {
 		result.push(cur_res);
 		i++;
 	}
-	return resut;
+	return result;
 };
 // @lc code=end
 
